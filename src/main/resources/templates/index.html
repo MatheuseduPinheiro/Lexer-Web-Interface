@@ -7,14 +7,15 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <h1>Lexer Web Interface</h1>
-    <div>
-        <label for="input">Input:</label>
-        <input type="text" id="input" name="input">
-        <button onclick="parseInput()">Parse</button>
+    <div class="conteiner">
+        <h1>Lexer Web Interface</h1>
+        <div>
+            <label for="input">Input:</label>
+            <input type="text" id="input" name="input" onkeydown="handleKeyPress(event)">
+            <button id="button-parse" onclick="parseInput()">Parse</button>
+        </div>
+        <div id="output"></div>
+    
+        <script src="js/script.js"></script> 
     </div>
-    <div id="output"></div>
-
-    <script src="js/script.js"></script>
-</body>
-</html>
+   

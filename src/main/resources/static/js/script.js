@@ -1,3 +1,9 @@
+function handleKeyPress(event) {
+    if (event.keyCode === 13) {
+        parseInput();
+    }
+}
+
 function parseInput() {
     const input = document.getElementById('input').value;
 
