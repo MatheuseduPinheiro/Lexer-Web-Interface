@@ -9,6 +9,6 @@ public class Num extends Token {
 
     @Override
     public String toString() {
-        return "<Num, " + value + '>';
+        return "Token: <Num, " + value + '>';
     }
 }

@@ -23,10 +23,13 @@ public class LexerService {
             Token token;
             while ((token = lexer.scan()).tag != Tag.EOF) {
                 result.append(token.toString()).append("\n");
+                result.append(token.tag).append("\n");
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
         return result.toString();
     }
+
+    
 }

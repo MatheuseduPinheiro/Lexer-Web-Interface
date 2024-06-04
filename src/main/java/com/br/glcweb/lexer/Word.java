@@ -14,6 +14,6 @@ public class Word extends Token {
 
     @Override
     public String toString() {
-        return "<Id, " + '\'' + lexeme + '\'' + '>';
+        return "Token: <Id, " + '\'' + lexeme + '\'' + '>';
     }
 }
