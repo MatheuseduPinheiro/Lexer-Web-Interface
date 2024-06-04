@@ -18,4 +18,6 @@ public class LexerController {
     public String parseInput(@RequestBody String input) {
         return lexerService.parseInput(input);
     }
+
+    
 }

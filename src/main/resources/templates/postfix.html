@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Postfix Web Interface</title>
+</head>
+<body>
+    <div class="container-main">
+        <h1>Postfix - Trdutor de código</h1>
+        <div id="campo-lexico">
+            <label for="input">Input:</label>
+            <input type="text" id="input" name="input" onkeydown="handleKeyPress(event)" placeholder="2 * 2 = 4...">
+            <button id="button-parse" onclick="postfixInput()">Postfix</button>
+        </div>
+        <div id="output"></div>
+
+        <button class="gatway"><a href="/">Deseja fazer uma depuração de Token?</a></button>
+        
+        <script src="js/script.js"></script> 
+</body>
+</html>
