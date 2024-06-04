@@ -29,6 +29,7 @@ Este é um projeto de interface web para um analisador léxico (lexer). Em compi
     ./mvnw spring-boot:run
     ```
 4. Abra o navegador e acesse `http://localhost:8081`.
+   
 5. Digite a string que deseja analisar no campo de entrada e pressione "Parse".
 
 ## Estrutura do Projeto
