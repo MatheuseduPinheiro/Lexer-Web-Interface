@@ -13,6 +13,7 @@ public class RoutesController {
 
     @GetMapping("/traduzir")
     public String postfix() {
-        return "postfix"; // Retorna o nome do template Thymeleaf (postfix.html)
+    return "postfix"; // Retorna o nome do template Thymeleaf (postfix.html)
     }
+
 }

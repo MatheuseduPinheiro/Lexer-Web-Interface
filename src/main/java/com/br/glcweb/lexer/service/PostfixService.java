@@ -1,81 +1,64 @@
 package com.br.glcweb.lexer.service;
 
 import com.br.glcweb.lexer.Lexer;
-
 import com.br.glcweb.lexer.Token;
 
-import org.springframework.stereotype.Service;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
+import org.springframework.stereotype.Service;
+
 @Service
 public class PostfixService {
-    
-    static Token lookahead;
-    static Lexer lexer;
+
+    private Lexer lexer;
 
     public String postfixInput(String input) {
-        StringBuilder result = new StringBuilder();
-
         try {
             lexer = new Lexer(new ByteArrayInputStream(input.getBytes()));
-            lookahead = lexer.scan();
-            expr(result);
+            Token lookahead = lexer.scan(); // Lookahead local para cada chamada a postfixInput
+            StringBuilder result = new StringBuilder();
+            expr(result, lookahead);
             result.append('\n');
+            return result.toString();
         } catch (IOException e) {
             e.printStackTrace();
-            result.append("Erro! ").append(e.getMessage());
+            return "Erro ao processar a entrada: " + e.getMessage();
         }
-
-        return result.toString();
     }
 
-    private void expr(StringBuilder result) throws IOException { 
-        term(result);
-        while(true) {
-            if((char) lookahead.tag == '+' ) {
-                match('+'); 
-                term(result); 
-                result.append('+'); 
-            }
-            else if((char) lookahead.tag == '-' ) {
-                match('-'); 
-                term(result); 
-                result.append('-');
-            }
-            else if((char) lookahead.tag == '/') {
-                match('/');
-                term(result);
-                result.append('/');
-            } else if ((char) lookahead.tag == '*') {
-                match('*');
-                term(result);
-                result.append('*');
-            } else if ((char) lookahead.tag == '=') {
-                match('=');
-                term(result);
-                result.append('=');
+    private void expr(StringBuilder result, Token lookahead) throws IOException {
+        term(result, lookahead);
+        while (true) {
+            char tagChar = (char) lookahead.tag;
+            if (tagChar == '+' || tagChar == '-' || tagChar == '*' || tagChar == '/') {
+                match(lookahead.tag);
+                term(result, lexer.scan());
+                result.append(tagChar);
             } else {
-                return; 
+                break;
             }
         }
     }
 
-    private void term(StringBuilder result) throws IOException {
-        if(lookahead.tag == 256 || lookahead.tag == 257) {
-            result.append(lookahead.toString()); 
-            match(lookahead.tag); 
-        } else { 
-            result.append("Erro!");
-            throw new Error("syntax error"); 
+    private void term(StringBuilder result, Token lookahead) {
+        if (lookahead.tag == 256 || lookahead.tag == 257) {
+            result.append(lookahead).append(' ');
+        } else {
+            throw new SyntaxError("Erro de sintaxe: termo esperado, mas encontrado " + lookahead);
         }
     }
 
     private void match(int t) throws IOException {
-        if(lookahead.tag == t) {
-            lookahead = lexer.scan();
-        } else {
-            throw new Error("syntax error");
+        Token nextToken = lexer.scan();
+        if (nextToken.tag != t) {
+            throw new SyntaxError("Erro de sintaxe: esperado " + t + ", encontrado " + nextToken);
+        }
+    }
+
+    private static class SyntaxError extends RuntimeException {
+        SyntaxError(String message) {
+            super(message);
         }
     }
 }
